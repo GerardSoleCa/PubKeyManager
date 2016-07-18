@@ -7,10 +7,10 @@ import (
 	"strings"
 )
 
-func KeyFingerprint(key []byte) string {
+func KeyFingerprint(key string) string {
 	var fingerprint []string
 	h := md5.New()
-	io.WriteString(h, string(key))
+	io.WriteString(h, key)
 	hash := fmt.Sprintf("%x", h.Sum(nil))
 	for i, c := range hash {
 		fingerprint = append(fingerprint, string(c))

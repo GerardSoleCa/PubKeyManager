@@ -6,5 +6,7 @@ import (
 )
 
 func ConfigureStaticRouter(router *mux.Router){
-	router.Handle("/", http.FileServer(http.Dir("./static")))
+	//staticRouter := mux.NewRouter().PathPrefix("/").Subrouter().StrictSlash(false)
+	//staticRouter.Handle("/", http.FileServer(http.Dir("./static")))
+	router.PathPrefix("/").Handler(http.StripPrefix("/", http.FileServer(http.Dir("./static/"))))
 }

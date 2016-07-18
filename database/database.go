@@ -15,6 +15,7 @@ func init() {
 	db := getDb()
 	defer db.Close()
 	initKeysDatabase(db)
+	initUsersDatabase(db)
 }
 
 func getDb() (*sql.DB) {

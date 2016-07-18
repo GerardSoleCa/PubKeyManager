@@ -6,14 +6,14 @@ import (
 	"net/http"
 	"github.com/GerardSoleCa/PubKeyManager/database"
 	"fmt"
-	"encoding/json"
 	"github.com/GerardSoleCa/PubKeyManager/server/responses"
 	"github.com/GerardSoleCa/PubKeyManager/utils"
 )
 
-func ConfigureKeysRouter(router *mux.Router){
+func ConfigureKeysRouter(router *mux.Router) {
 	keysRouter := mux.NewRouter().PathPrefix("/keys").Subrouter().StrictSlash(false)
 	router.PathPrefix("/keys").Handler(negroni.New(
+		negroni.HandlerFunc(TokenExistsMiddleware),
 		negroni.Wrap(keysRouter),
 	))
 	setupPaths(keysRouter)
@@ -36,18 +36,14 @@ func getKeys(rw http.ResponseWriter, q *http.Request) {
 
 func putKeys(rw http.ResponseWriter, q *http.Request) {
 	key := &database.Key{}
-	decoder := json.NewDecoder(q.Body)
-	err := decoder.Decode(key)
-	if err != nil {
+	if utils.ParseBody(q.Body, key) != nil {
 		responses.BadRequest(rw)
 		return
 	}
 	key.User = mux.Vars(q)["user"]
-	key.Fingerprint = utils.KeyFingerprint([]byte(key.Key))
-	_, err = database.AddUserKey(key);
-	if  err != nil {
+	if err := key.Save(); err != nil {
 		responses.ErrorResponse(rw, &responses.ApiError{Code: 500, Err: err.Error()})
 	} else {
-		responses.Created(rw)
+		responses.CreatedWithBody(rw, key)
 	}
 }

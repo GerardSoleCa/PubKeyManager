@@ -1,13 +1,26 @@
 package database
 
-import "database/sql"
+import (
+	"database/sql"
+	"github.com/GerardSoleCa/PubKeyManager/utils"
+)
 
 type Key struct {
-	Id          int64           `json:"id,omitempty"`
+	Id          int64         `json:"id,omitempty"`
 	User        string        `json:"user"`
 	Title       string        `json:"title"`
 	Fingerprint string        `json:"fingerprint"`
 	Key         string        `json:"key"`
+}
+
+func (k *Key) CalculateFingerprint() {
+	k.Fingerprint = utils.KeyFingerprint(k.Key)
+}
+
+func (k *Key) Save() (error) {
+	id, err := addUserKey(k)
+	k.Id = id
+	return err
 }
 
 func initKeysDatabase(db *sql.DB) {
@@ -20,7 +33,7 @@ func initKeysDatabase(db *sql.DB) {
 func GetKeyByUser(user string) ([]Key) {
 	db := getDb()
 	defer db.Close()
-	rows, err := db.Query("select id, user, title, fingerprint, key from keys where user = ?;", user)
+	rows, err := db.Query("SELECT * FROM keys WHERE user = ?;", user)
 	checkErr(err)
 	defer rows.Close()
 	keys := []Key{}
@@ -35,7 +48,7 @@ func GetKeyByUser(user string) ([]Key) {
 	return keys
 }
 
-func AddUserKey(key *Key) (id int64, err error){
+func addUserKey(key *Key) (id int64, err error) {
 	glog.Infof("Storing User Key: %+v\n", key)
 	db := getDb()
 	defer db.Close()

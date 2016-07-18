@@ -39,6 +39,10 @@ func InternalServerError(rw http.ResponseWriter) {
 	ErrorResponse(rw, &ApiError{Code: 500, Err: "Internal Server Error"})
 }
 
+func Unauthorized(rw http.ResponseWriter) {
+	ErrorResponse(rw, &ApiError{Code: 401, Err: "Unauthorized"})
+}
+
 func ErrorResponse(rw http.ResponseWriter, err *ApiError) {
 	b, _ := json.Marshal(err)
 	send(rw, string(b), err.Code)

@@ -1,0 +1,29 @@
+{
+  "name": "pubsubmanager",
+  "version": "1.0.0",
+  "description": "PubSubManager Frontend",
+  "main": "Gruntfile.js",
+  "author": "GerardSoleCa <g.sole.ca@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "^0.4.5",
+    "grunt-cli": "^0.1.13",
+    "grunt-contrib-clean": "^0.6.0",
+    "grunt-contrib-concat": "^0.5.0",
+    "grunt-contrib-copy": "^0.7.0",
+    "grunt-contrib-cssmin": "^0.10.0",
+    "grunt-contrib-jshint": "*",
+    "grunt-contrib-uglify": "^0.6.0",
+    "grunt-contrib-watch": "*",
+    "grunt-env": "*",
+    "grunt-filerev": "^2.1.2",
+    "grunt-html2js": "^0.3.5",
+    "grunt-ng-annotate": "*",
+    "grunt-notify": "0.3.1",
+    "grunt-preprocess": "*",
+    "grunt-sass": "^1.0.0",
+    "grunt-usemin": "^3.0.0",
+    "load-grunt-tasks": "^3.1.0",
+    "time-grunt": "^1.0.0"
+  }
+}
