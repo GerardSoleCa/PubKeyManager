@@ -1,3 +1,4 @@
+PubKeyManager
 **/*.db
 **/static/node_modules
 **/static/assets/components
