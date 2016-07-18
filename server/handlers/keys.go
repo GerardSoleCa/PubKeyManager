@@ -27,7 +27,7 @@ func setupPaths(router *mux.Router) {
 
 func getKeys(rw http.ResponseWriter, q *http.Request) {
 	user := mux.Vars(q)["user"]
-	keys := database.GetUserKeys(user)
+	keys := database.GetKeyByUser(user)
 	rw.WriteHeader(200)
 	for _, value := range keys {
 		fmt.Fprintln(rw, value.Key)
@@ -44,7 +44,8 @@ func putKeys(rw http.ResponseWriter, q *http.Request) {
 	}
 	key.User = mux.Vars(q)["user"]
 	key.Fingerprint = utils.KeyFingerprint([]byte(key.Key))
-	if err := database.AddUserKey(key); err != nil {
+	_, err = database.AddUserKey(key);
+	if  err != nil {
 		responses.ErrorResponse(rw, &responses.ApiError{Code: 500, Err: err.Error()})
 	} else {
 		responses.Created(rw)

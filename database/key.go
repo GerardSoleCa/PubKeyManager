@@ -3,7 +3,7 @@ package database
 import "database/sql"
 
 type Key struct {
-	Id          int           `json:"id,omitempty"`
+	Id          int64           `json:"id,omitempty"`
 	User        string        `json:"user"`
 	Title       string        `json:"title"`
 	Fingerprint string        `json:"fingerprint"`
@@ -17,7 +17,7 @@ func initKeysDatabase(db *sql.DB) {
 	}
 }
 
-func GetUserKeys(user string) ([]Key) {
+func GetKeyByUser(user string) ([]Key) {
 	db := getDb()
 	defer db.Close()
 	rows, err := db.Query("select id, user, title, fingerprint, key from keys where user = ?;", user)
@@ -35,7 +35,7 @@ func GetUserKeys(user string) ([]Key) {
 	return keys
 }
 
-func AddUserKey(key *Key) (err error){
+func AddUserKey(key *Key) (id int64, err error){
 	glog.Infof("Storing User Key: %+v\n", key)
 	db := getDb()
 	defer db.Close()
@@ -43,7 +43,20 @@ func AddUserKey(key *Key) (err error){
 	stmt, err := db.Prepare("INSERT INTO keys (user, title, fingerprint, key) VALUES (?, ?, ?, ?)")
 	checkErr(err)
 
-	_, err = stmt.Exec(key.User, key.Title, key.Fingerprint, key.Key)
+	res, err := stmt.Exec(key.User, key.Title, key.Fingerprint, key.Key)
+	id, err = res.LastInsertId()
+	checkErr(err)
 	//_, err = db.Query("INSERT INTO keys (user, title, fingerprint, key) VALUES ('?', '?', '?', '?');", key.User, key.Title, key.Fingerprint, key.Key)
+	return id, err
+}
+
+func DeleteKeyById(id int64) (err error) {
+	db := getDb()
+	defer db.Close()
+
+	stmt, err := db.Prepare("DELETE FROM keys WHERE id = ?")
+	checkErr(err)
+
+	_, err = stmt.Exec(id)
 	return err
 }

@@ -21,16 +21,11 @@ func Load(){
 	c := setupCors()
 	router := configureRouter()
 
-	helloRouter := mux.NewRouter().PathPrefix("/hello").Subrouter().StrictSlash(true)
-	router.PathPrefix("/hello").Handler(negroni.New(
-		negroni.Wrap(helloRouter),
-	))
-
+	handlers.ConfigureStaticRouter(router)
 	handlers.ConfigureKeysRouter(router)
 
 	n := negroni.Classic()
 	n.Use(c)
-	//n.Use(negroni.HandlerFunc(middlewares.ServerNameMiddleware))
 	n.UseHandler(router)
 	// Clear context route --> Context is a data holder to share data across stacked middlewares
 	context.ClearHandler(n)
