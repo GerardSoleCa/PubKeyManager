@@ -24,6 +24,10 @@ func (u *User) CheckValidity() (bool) {
 	return false
 }
 
+func (u *User) hashPassword() {
+
+}
+
 func addUser(u *User) (int64, error){
 	db := getDb()
 	defer db.Close()

@@ -11,18 +11,13 @@ import (
 )
 
 func ConfigureKeysRouter(router *mux.Router) {
-	keysRouter := mux.NewRouter().PathPrefix("/keys").Subrouter().StrictSlash(false)
+	router.Path("/keys/{user}").HandlerFunc(getKeys).Methods("GET")
+	secureRouter := mux.NewRouter().PathPrefix("/keys").Subrouter().StrictSlash(false)
 	router.PathPrefix("/keys").Handler(negroni.New(
 		negroni.HandlerFunc(TokenExistsMiddleware),
-		negroni.Wrap(keysRouter),
+		negroni.Wrap(secureRouter),
 	))
-	setupPaths(keysRouter)
-}
-
-func setupPaths(router *mux.Router) {
-	router.Path("/{user}").HandlerFunc(getKeys).Methods("GET")
-	router.Path("/{user}").HandlerFunc(putKeys).Methods("PUT")
-	//keysRouter.Path("/{user}/{fingerprint}").HandlerFunc().Methods("DELETE")
+	secureRouter.Path("/{user}").HandlerFunc(putKeys).Methods("PUT")
 }
 
 func getKeys(rw http.ResponseWriter, q *http.Request) {

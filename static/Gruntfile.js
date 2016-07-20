@@ -122,6 +122,7 @@ module.exports = function (grunt) {
                     'assets/dist/style.min.css': [
                         'assets/components/bootstrap/dist/css/bootstrap.min.css',
                         'assets/css/cosmo.bootstrap.min.css',
+                        'assets/css/signin.css',
                     ]
                 }
             }
@@ -140,11 +141,16 @@ module.exports = function (grunt) {
                         src: [
                             '<%= config.bowerFolder %>angular/angular.min.js',
                             '<%= config.bowerFolder %>angular-route/angular-route.min.js',
+                            '<%= config.bowerFolder %>angular-sanitize/angular-sanitize.min.js',
 
                             '<%= config.distFolder %>templates.js',
 
 
                             '<%= config.jsFolder %>pubkeymanager.js',
+                            '<%= config.jsFolder %>/configs/routes.config.js',
+                            '<%= config.jsFolder %>/controllers/login.ctrl.js',
+                            '<%= config.jsFolder %>/controllers/register.ctrl.js',
+                            '<%= config.jsFolder %>/controllers/keylist.ctrl.js',
                         ],
                         dest: '<%= config.distFolder %><%= config.appName %>.min.js'
                     }
