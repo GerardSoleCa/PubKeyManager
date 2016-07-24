@@ -19,5 +19,3 @@ type Row interface {
 type DbRepo struct {
 	dbHandler DbHandler
 }
-
-

@@ -1,20 +1,20 @@
 package utils
 
 import (
-	"net/http"
 	"encoding/json"
 	"fmt"
 	"io"
+	"net/http"
 )
 
 type HttpUtils struct{}
 
 type ApiError struct {
-	Code int `json:"-"`
+	Code int    `json:"-"`
 	Err  string `json:"error,omitempty"`
 }
 
-func (h HttpUtils) ParseBody(body io.Reader, t interface{}) (error) {
+func (h HttpUtils) ParseBody(body io.Reader, t interface{}) error {
 	decoder := json.NewDecoder(body)
 	return decoder.Decode(t)
 }
@@ -26,7 +26,7 @@ func (h HttpUtils) Ok(rw http.ResponseWriter, body string) {
 func (h HttpUtils) Created(rw http.ResponseWriter) {
 	h.send(rw, "", 201)
 }
-func (h HttpUtils)CreatedWithBody(rw http.ResponseWriter, body interface{}) {
+func (h HttpUtils) CreatedWithBody(rw http.ResponseWriter, body interface{}) {
 	b, _ := json.Marshal(body)
 	h.send(rw, string(b), 201)
 }

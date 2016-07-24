@@ -1,25 +1,25 @@
 package handlers
 
 import (
-	"github.com/gorilla/mux"
-	"github.com/codegangsta/negroni"
-	"net/http"
-	"github.com/GerardSoleCa/PubKeyManager/domain"
-	"github.com/op/go-logging"
 	"bytes"
 	"encoding/json"
 	"fmt"
+	"github.com/GerardSoleCa/PubKeyManager/domain"
 	"github.com/GerardSoleCa/PubKeyManager/server/utils"
+	"github.com/codegangsta/negroni"
+	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"github.com/op/go-logging"
+	"net/http"
 )
 
 var glog = logging.MustGetLogger("keys")
 
 type KeyInteractor interface {
-	AddKey(key *domain.Key) (error)
-	GetKeys() ([]domain.Key)
-	GetUserKeys(user string) ([]domain.Key)
-	DeleteKey(id int64) (error)
+	AddKey(key *domain.Key) error
+	GetKeys() []domain.Key
+	GetUserKeys(user string) []domain.Key
+	DeleteKey(id int64) error
 }
 
 type KeyServiceHandler struct {

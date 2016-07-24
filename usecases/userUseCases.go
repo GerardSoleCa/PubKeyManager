@@ -1,8 +1,8 @@
 package usecases
 
 import (
-	"github.com/GerardSoleCa/PubKeyManager/domain"
 	"errors"
+	"github.com/GerardSoleCa/PubKeyManager/domain"
 	"github.com/op/go-logging"
 )
 
@@ -14,7 +14,7 @@ type UserInteractor struct {
 	UserRepository domain.UserRepository
 }
 
-func (interactor UserInteractor) AddUser(user *domain.User) (error) {
+func (interactor UserInteractor) AddUser(user *domain.User) error {
 	user.HashPassword()
 	return interactor.UserRepository.Store(user)
 }
@@ -32,4 +32,3 @@ func (interactor UserInteractor) AuthenticateUser(username, password string) (do
 		return domain.User{}, ErrNotAuthenticated
 	}
 }
-

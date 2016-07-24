@@ -4,15 +4,15 @@ import (
 	"net/http"
 	"strconv"
 
+	"github.com/GerardSoleCa/PubKeyManager/server/handlers"
+	"github.com/GerardSoleCa/PubKeyManager/usecases"
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/context"
 	"github.com/gorilla/mux"
 	"github.com/op/go-logging"
-	"github.com/GerardSoleCa/PubKeyManager/server/handlers"
-	"github.com/GerardSoleCa/PubKeyManager/usecases"
 
-	"github.com/gorilla/sessions"
 	"github.com/gorilla/securecookie"
+	"github.com/gorilla/sessions"
 )
 
 var glog = logging.MustGetLogger("server")
@@ -36,7 +36,7 @@ func (s Server) Start() {
 	handlers.ConfigureStaticRouter(router)
 
 	glog.Debugf("Server listening on port %d", 8080)
-	glog.Fatal(http.ListenAndServe(":" + strconv.Itoa(8080), context.ClearHandler(n)))
+	glog.Fatal(http.ListenAndServe(":"+strconv.Itoa(8080), context.ClearHandler(n)))
 }
 
 func configureRouter() (router *mux.Router) {
@@ -46,7 +46,7 @@ func configureRouter() (router *mux.Router) {
 	return router
 }
 
-func setupContext(router *mux.Router) (*negroni.Negroni) {
+func setupContext(router *mux.Router) *negroni.Negroni {
 	n := negroni.Classic()
 	n.UseHandler(router)
 	context.ClearHandler(n)

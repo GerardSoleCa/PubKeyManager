@@ -23,7 +23,7 @@ func (repo *DbUserRepository) CreateTable() {
 	}
 }
 
-func (repo *DbUserRepository) Store(user *domain.User) (error) {
+func (repo *DbUserRepository) Store(user *domain.User) error {
 	res, err := repo.dbHandler.Execute("INSERT INTO users (username, password) VALUES (?, ?)", user.Username, user.Password)
 	if err == nil {
 		user.Id, _ = res.LastInsertId()
@@ -46,12 +46,12 @@ func (repo *DbUserRepository) GetUser(user string) (domain.User, error) {
 	return u, nil
 }
 
-func (repo *DbUserRepository) Update(user *domain.User) (error) {
+func (repo *DbUserRepository) Update(user *domain.User) error {
 	_, err := repo.dbHandler.Execute("UPDATE users SET password = ? WHERE username = ?", user.Username, user.Password)
 	return err
 }
 
-func (repo *DbUserRepository) Delete(username string) (error) {
+func (repo *DbUserRepository) Delete(username string) error {
 	_, err := repo.dbHandler.Execute("DELETE FROM users where username=?", username)
 	return err
 }

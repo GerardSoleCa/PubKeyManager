@@ -1,17 +1,17 @@
 package handlers
 
 import (
-	"github.com/gorilla/mux"
-	"net/http"
-	"github.com/GerardSoleCa/PubKeyManager/domain"
-	"encoding/json"
 	"bytes"
+	"encoding/json"
+	"github.com/GerardSoleCa/PubKeyManager/domain"
 	"github.com/GerardSoleCa/PubKeyManager/server/utils"
+	"github.com/gorilla/mux"
 	"github.com/gorilla/sessions"
+	"net/http"
 )
 
 type UserInteractor interface {
-	AddUser(user *domain.User) (error)
+	AddUser(user *domain.User) error
 	AuthenticateUser(username, password string) (domain.User, error)
 }
 

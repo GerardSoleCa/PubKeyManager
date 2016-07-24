@@ -3,8 +3,8 @@ package infrastructure
 import (
 	"database/sql"
 
-	_ "github.com/xeodou/go-sqlcipher"
 	"github.com/GerardSoleCa/PubKeyManager/interfaces"
+	_ "github.com/xeodou/go-sqlcipher"
 )
 
 type SqliteHandler struct {
