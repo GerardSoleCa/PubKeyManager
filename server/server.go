@@ -9,22 +9,34 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/op/go-logging"
 	"github.com/GerardSoleCa/PubKeyManager/server/handlers"
+	"github.com/GerardSoleCa/PubKeyManager/usecases"
+
+	"github.com/gorilla/sessions"
+	"github.com/gorilla/securecookie"
 )
 
 var glog = logging.MustGetLogger("server")
 
-func Load() {
+type Server struct {
+	KeyInteractor  *usecases.KeyInteractor
+	UserInteractor *usecases.UserInteractor
+}
+
+//Load starts and bootstraps the server
+func (s Server) Start() {
 	glog.Debug("Loading server module...")
 
 	router := configureRouter()
 	n := setupContext(router)
 
-	handlers.ConfigureAuthHandler(router)
-	handlers.ConfigureKeysRouter(router)
+	store := sessions.NewCookieStore(securecookie.GenerateRandomKey(256))
+
+	handlers.ConfigureAuthHandler(router, s.UserInteractor, store)
+	handlers.ConfigureKeysRouter(router, s.KeyInteractor, store)
 	handlers.ConfigureStaticRouter(router)
 
 	glog.Debugf("Server listening on port %d", 8080)
-	glog.Fatal(http.ListenAndServe(":" + strconv.Itoa(8080), n))
+	glog.Fatal(http.ListenAndServe(":" + strconv.Itoa(8080), context.ClearHandler(n)))
 }
 
 func configureRouter() (router *mux.Router) {

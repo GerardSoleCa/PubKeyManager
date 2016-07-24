@@ -16,5 +16,6 @@
                 templateUrl: '/keylist.tpl',
                 controller: 'KeylistCtrl',
             });
+        $routeProvider.otherwise('/login');
     }]);
 })();

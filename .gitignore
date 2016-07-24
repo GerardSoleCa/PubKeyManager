@@ -1,5 +1,5 @@
 PubKeyManager
 **/*.db
-**/static/node_modules
-**/static/assets/components
-**/static/assets/dist
+**/public/node_modules
+**/public/assets/components
+**/public/assets/dist
