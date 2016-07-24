@@ -11,6 +11,7 @@ import (
 	"github.com/gorilla/sessions"
 	"github.com/op/go-logging"
 	"net/http"
+	"strconv"
 )
 
 var glog = logging.MustGetLogger("keys")
@@ -43,6 +44,7 @@ func ConfigureKeysRouter(router *mux.Router, interactor KeyInteractor, session *
 	))
 	secureRouter.Path("/{user}").HandlerFunc(handler.putKeys).Methods("PUT")
 	secureRouter.Path("/").HandlerFunc(handler.getKeys).Methods("GET")
+	secureRouter.Path("/{id}").HandlerFunc(handler.deleteKey).Methods("DELETE")
 }
 
 func (handler KeyServiceHandler) getKeys(rw http.ResponseWriter, q *http.Request) {
@@ -101,6 +103,25 @@ func (handler KeyServiceHandler) putKeys(rw http.ResponseWriter, q *http.Request
 		return
 	}
 	handler.CreatedWithBody(rw, key)
+}
+
+func (handler KeyServiceHandler) deleteKey(rw http.ResponseWriter, q *http.Request) {
+	glog.Info("ConfigureKeysRouter -> putKeys")
+	idPathParam := mux.Vars(q)["id"]
+	if idPathParam == "" {
+		handler.BadRequest(rw)
+		return
+	}
+	id, err := strconv.ParseInt(idPathParam, 10, 64)
+	if err != nil {
+		handler.BadRequest(rw)
+		return
+	}
+	if err = handler.KeyInteractor.DeleteKey(id); err != nil {
+		handler.InternalServerError(rw)
+		return
+	}
+	handler.NoContent(rw)
 }
 
 func (handler KeyServiceHandler) AuthMiddleware(rw http.ResponseWriter, q *http.Request, next http.HandlerFunc) {

@@ -32,5 +32,14 @@
             return deferred.promise;
         };
 
+        this.deleteKey = function (id) {
+            var deferred = $q.defer();
+            $http.delete(settings.keys + id).success(function (response) {
+                deferred.resolve(response);
+            }).error(function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        };
     }]);
 })();

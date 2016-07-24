@@ -1,0 +1,15 @@
+<div class="modal-header">
+    <h3 class="modal-title">{{key.title}}</h3>
+</div>
+<div class="modal-body">
+    <p>
+        <b>User:</b> {{key.user}}
+    </p>
+    <p>
+        <b>Fingerprint:</b> {{key.fingerprint}}
+    </p>
+    <p class="ssh-key"><b>SSH Key:</b> {{key.key}}</p>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="close()">Close</button>
+</div>
