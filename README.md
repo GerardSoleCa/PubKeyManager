@@ -1,4 +1,5 @@
 # PubKeyManager
+[![Go Report Card](https://goreportcard.com/badge/github.com/GerardSoleCa/PubKeyManager)](https://goreportcard.com/report/github.com/GerardSoleCa/PubKeyManager)
 
 PubKeyManger **WILL** provide a simple way to manage public keys for SSH Connections on multiple servers by using *AuthorizedKeysCommand*.
 
