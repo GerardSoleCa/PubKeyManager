@@ -13,6 +13,17 @@
                 $scope.keys = success;
             });
 
+            $scope.addKey = function () {
+                $log.info("KeyListCtrl > AddKey");
+                showAddKeyModal(function (key) {
+                    backendService.addKey(key).then(function () {
+                        backendService.getKeys().then(function (success) {
+                            $scope.keys = success;
+                        });
+                    });
+                });
+            };
+
             $scope.deleteKey = function (key) {
                 $log.info("KeyListCtrl > DeleteKey > " + key.id);
                 showDeleteModal(function () {
@@ -53,6 +64,21 @@
                 modalInstance.result.then(function (result) {
                     if (result) {
                         cb();
+                    }
+                });
+            }
+
+            function showAddKeyModal(cb){
+
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: '/addkey.modal.tpl',
+                    controller: 'AddKeyModalCtrl',
+                    size: 'lg'
+                });
+                modalInstance.result.then(function (key) {
+                    if (key) {
+                        cb(key);
                     }
                 });
             }

@@ -42,7 +42,7 @@ func ConfigureKeysRouter(router *mux.Router, interactor KeyInteractor, session *
 		negroni.HandlerFunc(handler.AuthMiddleware),
 		negroni.Wrap(secureRouter),
 	))
-	secureRouter.Path("/{user}").HandlerFunc(handler.putKeys).Methods("PUT")
+	secureRouter.Path("/").HandlerFunc(handler.postKey).Methods("POST")
 	secureRouter.Path("/").HandlerFunc(handler.getKeys).Methods("GET")
 	secureRouter.Path("/{id}").HandlerFunc(handler.deleteKey).Methods("DELETE")
 }
@@ -83,19 +83,13 @@ func (handler KeyServiceHandler) getUserKeys(rw http.ResponseWriter, q *http.Req
 	}
 }
 
-func (handler KeyServiceHandler) putKeys(rw http.ResponseWriter, q *http.Request) {
+func (handler KeyServiceHandler) postKey(rw http.ResponseWriter, q *http.Request) {
 	glog.Info("ConfigureKeysRouter -> putKeys")
-	userQuery := mux.Vars(q)["user"]
-	if userQuery == "" {
-		handler.BadRequest(rw)
-		return
-	}
 	key := &domain.Key{}
 	if handler.ParseBody(q.Body, key) != nil {
 		handler.BadRequest(rw)
 		return
 	}
-	key.User = userQuery
 	key.CalculateFingerprint()
 
 	if err := handler.KeyInteractor.AddKey(key); err != nil {

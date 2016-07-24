@@ -41,5 +41,15 @@
             });
             return deferred.promise;
         };
+
+        this.addKey = function (key) {
+            var deferred = $q.defer();
+            $http.post(settings.keys, key).success(function (response) {
+                deferred.resolve(response);
+            }).error(function (error) {
+                deferred.reject(error);
+            });
+            return deferred.promise;
+        };
     }]);
 })();

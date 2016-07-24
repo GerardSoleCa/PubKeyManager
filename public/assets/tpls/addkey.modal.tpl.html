@@ -1,0 +1,25 @@
+<div class="modal-header">
+    <h3 class="modal-title">Add a new SSH Key</h3>
+</div>
+<div class="modal-body">
+    <form>
+        <div class="form-group">
+            <label for="inputTitle">Title</label>
+            <input ng-model="key.title" type="text" class="form-control" id="inputTitle" placeholder="Title">
+        </div>
+
+        <div class="form-group">
+            <label for="inputUser">User</label>
+            <input ng-model="key.user" type="text" class="form-control" id="inputUser" placeholder="User">
+        </div>
+
+        <div class="form-group">
+            <label for="inputSshKey">SSH Key</label>
+            <textarea ng-model="key.key" rows="5" class="form-control" id="inputSshKey" placeholder="SSH Key"></textarea>
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+    <button class="btn btn-primary" type="button" ng-click="ok()">Save</button>
+</div>

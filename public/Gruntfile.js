@@ -157,6 +157,7 @@ module.exports = function (grunt) {
                             '<%= config.jsFolder %>/controllers/register.ctrl.js',
                             '<%= config.jsFolder %>/controllers/keylist.ctrl.js',
                             '<%= config.jsFolder %>/controllers/key.modal.ctrl.js',
+                            '<%= config.jsFolder %>/controllers/addkey.modal.ctrl.js',
                             '<%= config.jsFolder %>/controllers/delete.modal.ctrl.js',
                         ],
                         dest: '<%= config.distFolder %><%= config.appName %>.min.js'
