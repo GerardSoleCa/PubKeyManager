@@ -121,6 +121,7 @@ module.exports = function (grunt) {
                 files: {
                     'assets/dist/style.min.css': [
                         'assets/components/bootstrap/dist/css/bootstrap.min.css',
+                        'assets/components/font-awesome/css/font-awesome.min.css',
                         'assets/css/cosmo.bootstrap.min.css',
                         'assets/css/signin.css',
                     ]
@@ -148,6 +149,9 @@ module.exports = function (grunt) {
 
                             '<%= config.jsFolder %>pubkeymanager.js',
                             '<%= config.jsFolder %>/configs/routes.config.js',
+                            '<%= config.jsFolder %>/constant/constants.js',
+                            '<%= config.jsFolder %>/values/values.js',
+                            '<%= config.jsFolder %>/services/backend.service.js',
                             '<%= config.jsFolder %>/controllers/login.ctrl.js',
                             '<%= config.jsFolder %>/controllers/register.ctrl.js',
                             '<%= config.jsFolder %>/controllers/keylist.ctrl.js',
