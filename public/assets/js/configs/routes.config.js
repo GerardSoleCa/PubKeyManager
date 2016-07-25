@@ -12,10 +12,20 @@
                 templateUrl: '/register.tpl',
                 controller: 'RegisterCtrl',
             })
-            .when('/keys', {
+            .when('/', {
                 templateUrl: '/keylist.tpl',
                 controller: 'KeylistCtrl',
+                requireLogin: true
             });
         $routeProvider.otherwise('/login');
+    }]);
+
+    pubKeyManager.run(["$rootScope", "$location", "backendService",
+        function ($rootScope, $location, backendService) {
+        $rootScope.$on("$routeChangeStart", function (event, next, current) {
+            if (next.requireLogin && !backendService.getAuthenticatedUser()) {
+                $location.path('/login');
+            }
+        });
     }]);
 })();

@@ -14,7 +14,7 @@
                 backendService.login($scope.user).then(function (success) {
                     $log.info("Info > LoginCtrl > Login :: Success -> Redirecting to home");
                     user = success;
-                    $location.path("/keys");
+                    $location.path("/");
                 }, function (error) {
                     $log.error("Error > LoginCtrl > Login", error);
                     if (error.status == 401) {

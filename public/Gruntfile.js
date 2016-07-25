@@ -144,6 +144,7 @@ module.exports = function (grunt) {
                             '<%= config.bowerFolder %>angular-route/angular-route.min.js',
                             '<%= config.bowerFolder %>angular-sanitize/angular-sanitize.min.js',
                             '<%= config.bowerFolder %>angular-bootstrap/ui-bootstrap-tpls.min.js',
+                            '<%= config.bowerFolder %>angular-cookies/angular-cookies.min.js',
 
                             '<%= config.distFolder %>templates.js',
 
