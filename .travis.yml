@@ -4,8 +4,5 @@ go:
   - 1.6
 
 install:
-  - apt-get install
-  - go get .../.
-
-script:
   - sudo apt-get install libssl-dev
+  - go get .../.
