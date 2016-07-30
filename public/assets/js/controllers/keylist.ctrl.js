@@ -13,15 +13,9 @@
                 $scope.keys = success;
             });
 
-            $scope.addKey = function () {
+            $scope.addKey = function (key) {
                 $log.info("KeyListCtrl > AddKey");
-                showAddKeyModal(function (key) {
-                    backendService.addKey(key).then(function () {
-                        backendService.getKeys().then(function (success) {
-                            $scope.keys = success;
-                        });
-                    });
-                });
+                showAddKeyModal(processAddKey);
             };
 
             $scope.deleteKey = function (key) {
@@ -68,18 +62,42 @@
                 });
             }
 
-            function showAddKeyModal(cb) {
+            function showAddKeyModal(key, error, cb) {
+
+                if (!cb) {
+                    cb = key;
+                    key = undefined;
+                    error = undefined;
+                }
 
                 var modalInstance = $uibModal.open({
                     animation: true,
                     templateUrl: '/addkey.modal.tpl',
                     controller: 'AddKeyModalCtrl',
-                    size: 'lg'
+                    size: 'lg',
+                    resolve: {
+                        key: function () {
+                            return key;
+                        },
+                        error: function () {
+                            return error;
+                        }
+                    }
                 });
                 modalInstance.result.then(function (key) {
                     if (key) {
                         cb(key);
                     }
+                });
+            }
+
+            function processAddKey(key) {
+                backendService.addKey(key).then(function () {
+                    backendService.getKeys().then(function (success) {
+                        $scope.keys = success;
+                    });
+                }, function (error) {
+                    showAddKeyModal(key, error, processAddKey);
                 });
             }
 

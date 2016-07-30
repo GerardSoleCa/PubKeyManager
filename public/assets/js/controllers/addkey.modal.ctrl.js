@@ -6,10 +6,11 @@
 
     var pubKeyManager = angular.module("PubKeyManager");
 
-    pubKeyManager.controller("AddKeyModalCtrl", ["$scope", "$uibModalInstance",
-        function ($scope, $uibModalInstance) {
+    pubKeyManager.controller("AddKeyModalCtrl", ["$scope", "$uibModalInstance", "key", "error",
+        function ($scope, $uibModalInstance, key, error) {
 
-            $scope.key = {};
+            $scope.key = key;
+            $scope.error = error;
 
             $scope.ok = function () {
                 $uibModalInstance.close($scope.key);

@@ -13,6 +13,7 @@ type UserRepository interface {
 	GetUser(user string) (User, error)
 	Update(user *User) error
 	Delete(user string) error
+	Count() (int, error)
 }
 
 type User struct {

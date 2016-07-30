@@ -15,11 +15,13 @@
 
         <div class="form-group">
             <label for="inputSshKey">SSH Key</label>
-            <textarea ng-model="key.key" rows="5" class="form-control" id="inputSshKey" placeholder="SSH Key"></textarea>
+            <textarea ng-model="key.key" rows="5" class="form-control" id="inputSshKey"
+                      placeholder="SSH Key"></textarea>
         </div>
     </form>
 </div>
 <div class="modal-footer">
+    <p ng-if="error" class="text-danger pull-left">{{error.error}}</p>
     <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
     <button class="btn btn-primary" type="button" ng-click="ok()">Save</button>
 </div>

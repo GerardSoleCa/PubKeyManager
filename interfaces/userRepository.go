@@ -55,3 +55,18 @@ func (repo *DbUserRepository) Delete(username string) error {
 	_, err := repo.dbHandler.Execute("DELETE FROM users where username=?", username)
 	return err
 }
+
+func (repo *DbUserRepository) Count() (int, error) {
+	row, err := repo.dbHandler.Query("SELECT COUNT(*) as count FROM users")
+	defer row.Close()
+	var u int
+	if err != nil {
+		glog.Debugf("Error > UserRepository > Count :: %s", err.Error())
+		return u, err
+	}
+	for row.Next() {
+		row.Scan(&u)
+		break
+	}
+	return u, nil
+}

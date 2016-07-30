@@ -16,10 +16,14 @@
                 var user = backendService.getAuthenticatedUser();
                 if (next.$$route.originalPath == "/" && user) {
                     $scope.user = user;
-                    console.log("taka");
                 } else {
                     $scope.user = undefined;
                 }
             });
+
+            console.log($location.path());
+            if ($location.path() == "/") {
+                $scope.user = backendService.getAuthenticatedUser();
+            }
         }]);
 })();

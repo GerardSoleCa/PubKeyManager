@@ -16,9 +16,7 @@
                     $location.path("/login");
                 }, function (error) {
                     $log.error("Error > RegisterCtrl > Register", error);
-                    if (error.error == "Unauthorized") {
-                        $scope.error = "User or Password are wrong";
-                    }
+                    $scope.error = error.error;
                 });
             };
         }]);

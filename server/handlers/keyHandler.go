@@ -84,11 +84,6 @@ func (handler KeyServiceHandler) postKey(rw http.ResponseWriter, q *http.Request
 		handler.BadRequest(rw)
 		return
 	}
-	if err := key.CalculateFingerprint(); err != nil {
-		handler.ErrorResponse(rw, &utils.ApiError{Code: 500, Err: err.Error()})
-		return
-	}
-
 	if err := handler.KeyInteractor.AddKey(key); err != nil {
 		handler.ErrorResponse(rw, &utils.ApiError{Code: 500, Err: err.Error()})
 		return

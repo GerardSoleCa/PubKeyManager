@@ -15,6 +15,19 @@ type UserInteractor struct {
 }
 
 func (interactor UserInteractor) AddUser(user *domain.User) error {
+	count, err := interactor.UserRepository.Count()
+	if err != nil {
+		return err
+	}
+	if count >= 1 {
+		return errors.New("Only one user is able to be in the system")
+	}
+	if len(user.Username) < 3 {
+		return errors.New("Username must have at least 3 characters")
+	}
+	if len(user.Password) < 4 {
+		return errors.New("Password must have at least 5 characters")
+	}
 	user.HashPassword()
 	return interactor.UserRepository.Store(user)
 }

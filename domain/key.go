@@ -5,6 +5,7 @@ import (
 	"encoding/base64"
 	"encoding/hex"
 	"strings"
+	"errors"
 )
 
 type KeyRepository interface {
@@ -25,7 +26,13 @@ type Key struct {
 func (k *Key) CalculateFingerprint() (error) {
 	var fingerprint []string
 
-	b, err := base64.StdEncoding.DecodeString(strings.Split(k.Key, " ")[1])
+	splittedKey := strings.Split(k.Key, " ")
+
+	if len(splittedKey) == 1 {
+		return errors.New("Public SSH Key is not in a valid format")
+	}
+
+	b, err := base64.StdEncoding.DecodeString(splittedKey[1])
 
 	if err != nil {
 		return err
@@ -36,7 +43,7 @@ func (k *Key) CalculateFingerprint() (error) {
 	hash := hex.EncodeToString(h.Sum(nil))
 	for i, c := range hash {
 		fingerprint = append(fingerprint, string(c))
-		if i != len(string(hash))-1 && i%2 == 1 {
+		if i != len(string(hash)) - 1 && i % 2 == 1 {
 			fingerprint = append(fingerprint, ":")
 		}
 	}

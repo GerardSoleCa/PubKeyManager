@@ -19,7 +19,8 @@
             <!--<li><a href="#">Link</a></li>-->
             <!--</ul>-->
             <p ng-if="user" class="navbar-text navbar-right">
-                Signed in as <a ng-click="logout()" class="navbar-link">{{user.username}}</a>
+                Signed in as <a ng-click="logout()" class="navbar-link" data-toggle="tooltip" data-placement="bottom"
+                                title="Logout">{{user.username}}</a>
             </p>
         </div><!-- /.navbar-collapse -->
     </div><!-- /.container-fluid -->
