@@ -50,12 +50,6 @@ func ConfigureKeysRouter(router *mux.Router, interactor KeyInteractor, session *
 func (handler KeyServiceHandler) getKeys(rw http.ResponseWriter, q *http.Request) {
 	glog.Info("ConfigureKeysRouter -> getKeys")
 	keys := handler.KeyInteractor.GetKeys()
-	if len(keys) == 0 {
-		handler.BadRequest(rw)
-		return
-	} else {
-		glog.Infof("Retrieving %d keys", len(keys))
-	}
 	var response bytes.Buffer
 	encoder := json.NewEncoder(&response)
 	encoder.Encode(keys)
@@ -90,7 +84,10 @@ func (handler KeyServiceHandler) postKey(rw http.ResponseWriter, q *http.Request
 		handler.BadRequest(rw)
 		return
 	}
-	key.CalculateFingerprint()
+	if err := key.CalculateFingerprint(); err != nil {
+		handler.ErrorResponse(rw, &utils.ApiError{Code: 500, Err: err.Error()})
+		return
+	}
 
 	if err := handler.KeyInteractor.AddKey(key); err != nil {
 		handler.ErrorResponse(rw, &utils.ApiError{Code: 500, Err: err.Error()})

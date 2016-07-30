@@ -22,10 +22,14 @@ type Key struct {
 	Key         string `json:"key"`
 }
 
-func (k *Key) CalculateFingerprint() {
+func (k *Key) CalculateFingerprint() (error) {
 	var fingerprint []string
 
-	b, _ := base64.StdEncoding.DecodeString(strings.Split(k.Key, " ")[1])
+	b, err := base64.StdEncoding.DecodeString(strings.Split(k.Key, " ")[1])
+
+	if err != nil {
+		return err
+	}
 
 	h := md5.New()
 	h.Write(b)
@@ -38,4 +42,5 @@ func (k *Key) CalculateFingerprint() {
 	}
 
 	k.Fingerprint = strings.Join(fingerprint, "")
+	return nil
 }

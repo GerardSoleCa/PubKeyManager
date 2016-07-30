@@ -58,14 +58,14 @@ func (r SqliteRow) Close() {
 	r.Rows.Close()
 }
 
-func NewSqliteHandler(dbfileName string) *SqliteHandler {
+func NewSqliteHandler(dbfileName string, password string) *SqliteHandler {
 	conn, _ := sql.Open("sqlite3", dbfileName)
 
-	//p := "PRAGMA key = '123456';"
-	//_, err := conn.Exec(p)
-	//if err != nil {
-	//	panic(err)
-	//}
+	p := "PRAGMA key = '" + password + "';"
+	_, err := conn.Exec(p)
+	if err != nil {
+		panic(err)
+	}
 
 	sqliteHandler := new(SqliteHandler)
 	sqliteHandler.Conn = conn

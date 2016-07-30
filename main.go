@@ -8,7 +8,9 @@ import (
 )
 
 func main() {
-	dbHandler := infrastructure.NewSqliteHandler("PubKeyManager.db")
+	config := infrastructure.LoadConfigurations()
+
+	dbHandler := infrastructure.NewSqliteHandler("PubKeyManager.db", config.DbPassword)
 
 	keyInteractor := new(usecases.KeyInteractor)
 	keyInteractor.KeyRepository = interfaces.NewDbKeyRepository(dbHandler)
@@ -19,5 +21,6 @@ func main() {
 	server := &server.Server{}
 	server.KeyInteractor = keyInteractor
 	server.UserInteractor = userInteractor
+	server.Configuration = config
 	server.Start()
 }

@@ -65,5 +65,10 @@
                     return undefined;
                 }
             };
+
+            this.removeAuthenticatedUser = function () {
+                $cookies.remove("authenticated");
+                $cookies.remove("user");
+            };
         }]);
 })();

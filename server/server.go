@@ -13,6 +13,7 @@ import (
 
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
+	"github.com/GerardSoleCa/PubKeyManager/infrastructure"
 )
 
 var glog = logging.MustGetLogger("server")
@@ -20,6 +21,7 @@ var glog = logging.MustGetLogger("server")
 type Server struct {
 	KeyInteractor  *usecases.KeyInteractor
 	UserInteractor *usecases.UserInteractor
+	Configuration  *infrastructure.Configuration
 }
 
 //Load starts and bootstraps the server
@@ -35,8 +37,8 @@ func (s Server) Start() {
 	handlers.ConfigureKeysRouter(router, s.KeyInteractor, store)
 	handlers.ConfigureStaticRouter(router)
 
-	glog.Debugf("Server listening on port %d", 8080)
-	glog.Fatal(http.ListenAndServe(":"+strconv.Itoa(8080), context.ClearHandler(n)))
+	glog.Debugf("Server listening on port %d", s.Configuration.Port)
+	glog.Fatal(http.ListenAndServe(":" + strconv.Itoa(s.Configuration.Port), context.ClearHandler(n)))
 }
 
 func configureRouter() (router *mux.Router) {

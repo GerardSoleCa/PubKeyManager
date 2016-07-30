@@ -6,8 +6,8 @@
 
     var pubKeyManager = angular.module("PubKeyManager");
 
-    pubKeyManager.controller("KeylistCtrl", ["$scope", "$log", "$location", "$uibModal", "backendService", "user",
-        function ($scope, $log, $location, $uibModal, backendService, user) {
+    pubKeyManager.controller("KeylistCtrl", ["$scope", "$log", "$location", "$uibModal", "backendService",
+        function ($scope, $log, $location, $uibModal, backendService) {
 
             backendService.getKeys().then(function (success) {
                 $scope.keys = success;
@@ -68,7 +68,7 @@
                 });
             }
 
-            function showAddKeyModal(cb){
+            function showAddKeyModal(cb) {
 
                 var modalInstance = $uibModal.open({
                     animation: true,

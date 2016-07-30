@@ -43,8 +43,8 @@ func (repo *DbKeyRepository) GetUserKeys(user string) []domain.Key {
 
 func (repo *DbKeyRepository) processKeyRows(rows Row, err error) []domain.Key {
 	var keys []domain.Key
+	defer rows.Close()
 	if err != nil {
-		rows.Close()
 		return keys
 	}
 	for rows.Next() {
@@ -52,6 +52,5 @@ func (repo *DbKeyRepository) processKeyRows(rows Row, err error) []domain.Key {
 		rows.Scan(&k.Id, &k.User, &k.Title, &k.Fingerprint, &k.Key)
 		keys = append(keys, k)
 	}
-	rows.Close()
 	return keys
 }
