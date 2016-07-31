@@ -1,7 +1,8 @@
 {
-  "name": "pubsubmanager",
+  "name": "pubkeymanager",
+  "private": true,
   "version": "1.0.0",
-  "description": "PubSubManager Frontend",
+  "description": "PubKeyManager Frontend",
   "main": "Gruntfile.js",
   "author": "GerardSoleCa <g.sole.ca@gmail.com>",
   "license": "MIT",
