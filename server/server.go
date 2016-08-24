@@ -11,9 +11,9 @@ import (
 	"github.com/gorilla/mux"
 	"github.com/op/go-logging"
 
+	"github.com/GerardSoleCa/PubKeyManager/infrastructure"
 	"github.com/gorilla/securecookie"
 	"github.com/gorilla/sessions"
-	"github.com/GerardSoleCa/PubKeyManager/infrastructure"
 )
 
 var glog = logging.MustGetLogger("server")
@@ -38,7 +38,7 @@ func (s Server) Start() {
 	handlers.ConfigureStaticRouter(router)
 
 	glog.Debugf("Server listening on port %d", s.Configuration.Port)
-	glog.Fatal(http.ListenAndServe(":" + strconv.Itoa(s.Configuration.Port), context.ClearHandler(n)))
+	glog.Fatal(http.ListenAndServe(":"+strconv.Itoa(s.Configuration.Port), context.ClearHandler(n)))
 }
 
 func configureRouter() (router *mux.Router) {

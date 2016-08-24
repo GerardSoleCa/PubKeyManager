@@ -4,8 +4,8 @@ import (
 	"crypto/md5"
 	"encoding/base64"
 	"encoding/hex"
-	"strings"
 	"errors"
+	"strings"
 )
 
 type KeyRepository interface {
@@ -23,7 +23,7 @@ type Key struct {
 	Key         string `json:"key"`
 }
 
-func (k *Key) CalculateFingerprint() (error) {
+func (k *Key) CalculateFingerprint() error {
 	var fingerprint []string
 
 	splittedKey := strings.Split(k.Key, " ")
@@ -43,7 +43,7 @@ func (k *Key) CalculateFingerprint() (error) {
 	hash := hex.EncodeToString(h.Sum(nil))
 	for i, c := range hash {
 		fingerprint = append(fingerprint, string(c))
-		if i != len(string(hash)) - 1 && i % 2 == 1 {
+		if i != len(string(hash))-1 && i%2 == 1 {
 			fingerprint = append(fingerprint, ":")
 		}
 	}

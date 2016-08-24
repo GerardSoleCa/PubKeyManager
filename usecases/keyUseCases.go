@@ -1,8 +1,8 @@
 package usecases
 
 import (
-	"github.com/GerardSoleCa/PubKeyManager/domain"
 	"errors"
+	"github.com/GerardSoleCa/PubKeyManager/domain"
 )
 
 // KeyInteractor. Holds a KeyRepository instance
@@ -26,6 +26,7 @@ func (interactor KeyInteractor) AddKey(key *domain.Key) error {
 	}
 	return interactor.KeyRepository.Store(key)
 }
+
 // GetKeys. Function contained on KeyInteractor
 func (interactor KeyInteractor) GetKeys() []domain.Key {
 	return interactor.KeyRepository.GetKeys()

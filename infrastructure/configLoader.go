@@ -6,11 +6,11 @@ import (
 )
 
 type Configuration struct {
-	Port int
+	Port       int
 	DbPassword string
 }
 
-func LoadConfigurations() (*Configuration) {
+func LoadConfigurations() *Configuration {
 	file, err := ioutil.ReadFile("pubkeymanager.conf")
 	if err != nil {
 		panic(err)

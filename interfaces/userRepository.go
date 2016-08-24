@@ -7,10 +7,10 @@ import (
 
 var glog = logging.MustGetLogger("UserRepository")
 
-// Redefine a DbUserRepository from DbRepo
+// DbUserRepository struct
 type DbUserRepository DbRepo
 
-// Creates a new UserRepository backed up by a DB
+// NewDbUserRepository creates a new UserRepository backed up by a DB
 func NewDbUserRepository(dbHandler DbHandler) *DbUserRepository {
 	dbUserRepo := new(DbUserRepository)
 	dbUserRepo.dbHandler = dbHandler
@@ -18,7 +18,7 @@ func NewDbUserRepository(dbHandler DbHandler) *DbUserRepository {
 	return dbUserRepo
 }
 
-// CreateTable. Function contained on DbUserRepository
+// CreateTable Function contained on DbUserRepository
 func (repo *DbUserRepository) CreateTable() {
 	_, err := repo.dbHandler.Execute("CREATE TABLE IF NOT EXISTS Users (id INTEGER PRIMARY KEY AUTOINCREMENT, username TEXT, password TEXT NOT NULL, UNIQUE (id, username))")
 	if err != nil {
@@ -26,7 +26,7 @@ func (repo *DbUserRepository) CreateTable() {
 	}
 }
 
-// Store. Function contained on DbUserRepository
+// Store Function contained on DbUserRepository
 func (repo *DbUserRepository) Store(user *domain.User) error {
 	res, err := repo.dbHandler.Execute("INSERT INTO users (username, password) VALUES (?, ?)", user.Username, user.Password)
 	if err == nil {
@@ -35,7 +35,7 @@ func (repo *DbUserRepository) Store(user *domain.User) error {
 	return err
 }
 
-// GetUser. Function contained on DbUserRepository
+// GetUser Function contained on DbUserRepository
 func (repo *DbUserRepository) GetUser(user string) (domain.User, error) {
 	row, err := repo.dbHandler.Query("SELECT * FROM users WHERE username=?", user)
 	u := domain.User{}
@@ -51,19 +51,19 @@ func (repo *DbUserRepository) GetUser(user string) (domain.User, error) {
 	return u, nil
 }
 
-// Update. Function contained on DbUserRepository
+// Update Function contained on DbUserRepository
 func (repo *DbUserRepository) Update(user *domain.User) error {
 	_, err := repo.dbHandler.Execute("UPDATE users SET password = ? WHERE username = ?", user.Username, user.Password)
 	return err
 }
 
-// Delete. Function contained on DbUserRepository
+// Delete Function contained on DbUserRepository
 func (repo *DbUserRepository) Delete(username string) error {
 	_, err := repo.dbHandler.Execute("DELETE FROM users where username=?", username)
 	return err
 }
 
-// Count. Function contained on DbUserRepository
+// Count Function contained on DbUserRepository
 func (repo *DbUserRepository) Count() (int, error) {
 	row, err := repo.dbHandler.Query("SELECT COUNT(*) as count FROM users")
 	defer row.Close()
