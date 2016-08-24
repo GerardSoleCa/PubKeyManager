@@ -64,6 +64,7 @@ func (r SqliteRow) Scan(dest ...interface{}) {
 func (r SqliteRow) Next() bool {
 	return r.Rows.Next()
 }
+
 // Close function contained on SqliteRow
 func (r SqliteRow) Close() {
 	r.Rows.Close()
