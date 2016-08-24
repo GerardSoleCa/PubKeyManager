@@ -6,7 +6,7 @@ import (
 	"github.com/op/go-logging"
 )
 
-// ErrNotAuthenticated. Response for non authenticated user
+// ErrNotAuthenticated response for non authenticated user
 var ErrNotAuthenticated = errors.New("User could not be authenticated")
 
 var glog = logging.MustGetLogger("UserUseCases")
@@ -16,7 +16,7 @@ type UserInteractor struct {
 	UserRepository domain.UserRepository
 }
 
-// AddUser. Function contained on UserInteractor
+// AddUser function contained on UserInteractor
 func (interactor UserInteractor) AddUser(user *domain.User) error {
 	count, err := interactor.UserRepository.Count()
 	if err != nil {
@@ -35,7 +35,7 @@ func (interactor UserInteractor) AddUser(user *domain.User) error {
 	return interactor.UserRepository.Store(user)
 }
 
-// AuthenticateUser. Function contained on UserInteractor
+// AuthenticateUser function contained on UserInteractor
 func (interactor UserInteractor) AuthenticateUser(username, password string) (domain.User, error) {
 	glog.Debugf("UserUseCase > AuthenticateUser :: %s, %s", username, password)
 	u, err := interactor.UserRepository.GetUser(username)

@@ -5,11 +5,13 @@ import (
 	"io/ioutil"
 )
 
+// Configuration struct holding different options
 type Configuration struct {
 	Port       int
 	DbPassword string
 }
 
+// LoadConfigurations loads configurations from pubkeymanager.conf and then returns a pointer
 func LoadConfigurations() *Configuration {
 	file, err := ioutil.ReadFile("pubkeymanager.conf")
 	if err != nil {

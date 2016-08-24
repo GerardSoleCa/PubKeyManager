@@ -18,13 +18,14 @@ import (
 
 var glog = logging.MustGetLogger("server")
 
+// Server struct
 type Server struct {
 	KeyInteractor  *usecases.KeyInteractor
 	UserInteractor *usecases.UserInteractor
 	Configuration  *infrastructure.Configuration
 }
 
-//Load starts and bootstraps the server
+//Start loads, starts and bootstraps the server
 func (s Server) Start() {
 	glog.Debug("Loading server module...")
 

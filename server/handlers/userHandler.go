@@ -10,13 +10,13 @@ import (
 	"net/http"
 )
 
-// ConfigureStaticRouter interface
+// UserInteractor interface
 type UserInteractor interface {
 	AddUser(user *domain.User) error
 	AuthenticateUser(username, password string) (domain.User, error)
 }
 
-// UserService struct
+// UserServiceHandler struct
 type UserServiceHandler struct {
 	utils.HttpUtils
 	UserInteractor UserInteractor
