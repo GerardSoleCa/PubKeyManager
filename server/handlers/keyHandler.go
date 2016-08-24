@@ -70,9 +70,8 @@ func (handler KeyServiceHandler) getUserKeys(rw http.ResponseWriter, q *http.Req
 	if len(keys) == 0 {
 		handler.BadRequest(rw)
 		return
-	} else {
-		glog.Infof("Retrieving %d keys", len(keys))
 	}
+	glog.Infof("Retrieving %d keys", len(keys))
 
 	rw.WriteHeader(200)
 	for _, k := range keys {
