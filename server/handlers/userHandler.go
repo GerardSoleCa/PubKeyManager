@@ -10,17 +10,20 @@ import (
 	"net/http"
 )
 
+// Interface defining UserInteractor
 type UserInteractor interface {
 	AddUser(user *domain.User) error
 	AuthenticateUser(username, password string) (domain.User, error)
 }
 
+// Struct holder for UserService Handler
 type UserServiceHandler struct {
 	utils.HttpUtils
 	UserInteractor UserInteractor
 	Session        *sessions.CookieStore
 }
 
+// Configures AuthHandler and its router
 func ConfigureAuthHandler(router *mux.Router, interactor UserInteractor, session *sessions.CookieStore) {
 	handler := UserServiceHandler{}
 	handler.UserInteractor = interactor
