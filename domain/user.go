@@ -8,7 +8,7 @@ import (
 
 var glog = logging.MustGetLogger("User")
 
-// Interface defining UserRepository
+// UserRepository interface
 type UserRepository interface {
 	Store(user *User) error
 	GetUser(user string) (User, error)
@@ -24,13 +24,13 @@ type User struct {
 	Password string `json:"password,omitempty"`
 }
 
-// HashPassword. Function contained on User
+// HashPassword function contained on User
 func (u *User) HashPassword() {
 	password, _ := bcrypt.GenerateFromPassword([]byte(u.Password), bcrypt.DefaultCost)
 	u.Password = string(password)
 }
 
-// CheckPassword. Function contained on User
+// CheckPassword function contained on User
 func (u *User) CheckPassword(password string) bool {
 	fmt.Println("User: ", u)
 	glog.Debugf("User > CheckPassowrd :: %d", len([]byte(u.Password)))

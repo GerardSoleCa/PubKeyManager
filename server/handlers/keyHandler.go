@@ -16,6 +16,7 @@ import (
 
 var glog = logging.MustGetLogger("keys")
 
+// KeyInteractor interface
 type KeyInteractor interface {
 	AddKey(key *domain.Key) error
 	GetKeys() []domain.Key
@@ -23,12 +24,14 @@ type KeyInteractor interface {
 	DeleteKey(id int64) error
 }
 
+// KeyServiceHandler struct
 type KeyServiceHandler struct {
 	utils.HttpUtils
 	KeyInteractor KeyInteractor
 	Session       *sessions.CookieStore
 }
 
+// ConfigureKeysRouter configures router routes for key management
 func ConfigureKeysRouter(router *mux.Router, interactor KeyInteractor, session *sessions.CookieStore) {
 	glog.Info("ConfigureKeysRouter")
 
@@ -110,6 +113,7 @@ func (handler KeyServiceHandler) deleteKey(rw http.ResponseWriter, q *http.Reque
 	handler.NoContent(rw)
 }
 
+// AuthMiddleware function contained on KeyServiceHandler
 func (handler KeyServiceHandler) AuthMiddleware(rw http.ResponseWriter, q *http.Request, next http.HandlerFunc) {
 	glog.Infof("AuthMiddleware")
 	session, _ := handler.Session.Get(q, "authenticated")

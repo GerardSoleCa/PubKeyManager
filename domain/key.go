@@ -8,6 +8,7 @@ import (
 	"strings"
 )
 
+// KeyRepository interface
 type KeyRepository interface {
 	Store(key *Key) error
 	Delete(id int64) error
@@ -15,6 +16,7 @@ type KeyRepository interface {
 	GetUserKeys(user string) []Key
 }
 
+// Key struct holding information contained on Key
 type Key struct {
 	Id          int64  `json:"id,omitempty"`
 	User        string `json:"user"`
@@ -23,6 +25,7 @@ type Key struct {
 	Key         string `json:"key"`
 }
 
+// CalculateFingerprint function contained on Key
 func (k *Key) CalculateFingerprint() error {
 	var fingerprint []string
 
