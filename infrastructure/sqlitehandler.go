@@ -70,7 +70,7 @@ func (r SqliteRow) Close() {
 	r.Rows.Close()
 }
 
-// NewSqliteHanlder creates a new Ciphered SqliteHandler
+// NewSqliteHandler creates a new Ciphered SqliteHandler
 func NewSqliteHandler(dbfileName string, password string) *SqliteHandler {
 	conn, _ := sql.Open("sqlite3", dbfileName)
 
