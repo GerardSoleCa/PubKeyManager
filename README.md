@@ -1,5 +1,6 @@
 # PubKeyManager
 [![Build Status](https://travis-ci.org/GerardSoleCa/PubKeyManager.svg?branch=master)](https://travis-ci.org/GerardSoleCa/PubKeyManager) [![Go Report Card](https://goreportcard.com/badge/github.com/GerardSoleCa/PubKeyManager)](https://goreportcard.com/report/github.com/GerardSoleCa/PubKeyManager)
+[![GoDoc](https://godoc.org/github.com/GerardSoleCa/PubKeyManager?status.svg)](https://godoc.org/github.com/GerardSoleCa/PubKeyManager)
 
 PubKeyManager provides a simple way to manage public keys for SSH Connections on multiple servers. 
 It makes use of **AuthorizedKeysCommand** of OpenSSH.
